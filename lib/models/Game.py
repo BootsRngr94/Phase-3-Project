@@ -11,8 +11,6 @@ class Game:
         self.platform = platform
 
 
-        Game.all.append(self)
-   
         self.genre._games.append(self)
         self.genre._platforms.append(self.platform)
 
@@ -36,20 +34,22 @@ class Game:
         return self._genre
     @genre.setter
     def genre(self, genre):
-        if type(genre) == str and 0 < len(genre) and not hasattr(self,"genre"):
+        from models.Genre import Genre
+        if  isinstance(genre, Genre) and not hasattr(self,"genre"):
             self._genre = genre
         else:
-            raise Exception("The genre must be a string and have more than 0 characters")
+            raise Exception("The genre must an instance of a Genre")
        
     @property
     def platform(self):
         return self._platform
     @platform.setter
     def platform(self, platform):
-        if type(platform) == str and 0 < len(platform) and not hasattr(self,"platform"):
+        from models.Platform import Platform
+        if isinstance(platform, Platform) and not hasattr(self,"platform"):
             self._platform = platform
         else:
-            raise Exception("The platform must be a string and have more than 0 characters")
+            raise Exception("The platform must be an instance of Platform")
        
     @classmethod
     def create_table(cls):
@@ -58,8 +58,8 @@ class Game:
                 CREATE TABLE IF NOT EXISTS games (
                 id INTEGER PRIMARY KEY,
                 title TEXT,
-                genre TEXT,
-                platform TEXT)
+                genre INTEGER,
+                platform INTEGER)
             """
             CURSOR.execute(sql)
             CONN.commit()
@@ -79,12 +79,12 @@ class Game:
         Update object id attribute using the primary key value of new row.
         Save the object in local dictionary using table row's PK as dictionary key"""
         sql = """
-            INSERT INTO games (title, genre, platfrom)
+            INSERT INTO games (title, genre, platform)
             VALUES (?, ?, ?)
         """
+        # import ipdb; ipdb.set_trace()
 
-
-        CURSOR.execute(sql, (self.title, self.genre, self.platform))
+        CURSOR.execute(sql, (self.title, self.genre.id, self.platform.id))
         CONN.commit()
 
 
