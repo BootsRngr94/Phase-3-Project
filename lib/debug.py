@@ -23,7 +23,7 @@ fighter = Genre.create("Fighter")
 race = Genre.create("Race")
 rhythm = Genre.create("Rhythm")
 rpg = Genre.create("RPG")
-puzzle = Game.create("Puzzle")
+puzzle = Genre.create("Puzzle")
 
 xbox = Platform.create("Xbox")
 nintendo = Platform.create("Nintendo")

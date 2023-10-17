@@ -2,6 +2,10 @@ from models.Genre import Genre
 from models.Platform import Platform
 from models.Game import Game
 
+def exit_program():
+    print("Bye-Bye!")
+    exit()
+
 
 def add_game(title, genre_name, platform_name):
     genre = next((g for g in genres if g.name == genre_name), None)
@@ -22,7 +26,9 @@ def add_game(title, genre_name, platform_name):
     games.append(game)
 
 
+        
 def display_games():
+    games = Game.get_all()
     for game in games:
         print(f"Title: {game.title}, Genre: {game.genre.name}, Platform: {game.platform.name}")
 

@@ -1,14 +1,12 @@
 # lib/cli.py
 
 
-from lib.helpers import (
+from helpers import (
     exit_program,
     add_game,
     delete_game,
     display_games
 )
-
-
 
 
 def main():
@@ -17,8 +15,9 @@ def main():
         choice = input("> ")
         if choice == "0":
             exit_program()
-        else:
-            print("Invalid choice")
+            exit()
+        # else:
+            # print("Invalid choice")
         if choice == '1':
             title = input("Enter game title: ")
             genre_name = input("Enter genre name: ")
@@ -46,9 +45,7 @@ def menu():
         print("2. Delete Game")
         print("3. View All Games")
         print("4. Exit")
-
-
-       
+     
    
 if __name__ == "__main__":
     main()

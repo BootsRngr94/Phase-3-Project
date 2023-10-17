@@ -14,7 +14,8 @@ class Genre:
     
     @name.setter
     def name(self, name):
-        if type(name) == str and 0 < len(name) and not hasattr(self,"name"):
+        print(name)
+        if not hasattr(self,"name"):
             self._name = name
         else:
             raise Exception("The name must be a string and have more than 0 characters")
@@ -103,3 +104,33 @@ class Genre:
 
         # Set the id to None
         self.id = None
+
+    @classmethod
+    def instance_from_db(cls, row):
+        """Return a Department object having the attribute values from the table row."""
+        # import ipdb 
+        # ipdb.set_trace()
+        # Check the dictionary for an existing instance using the row's primary key
+        genre = cls.all.get(row[0])
+        if genre:
+            # print(row[1])
+            # ensure attributes match row values in case local instance was modified
+            genre.name = row[1]
+        else:
+            # not in dictionary, create new instance and add to dictionary
+            genre = cls(row[1])
+            genre.id = row[0]
+            cls.all[genre.id] = genre
+        return genre
+
+    @classmethod
+    def find_by_id(cls, id):
+        """Return a Genre object corresponding to the table row matching the specified primary key"""
+        sql = """
+            SELECT *
+            FROM genres
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    

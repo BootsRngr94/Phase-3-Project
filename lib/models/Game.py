@@ -38,7 +38,7 @@ class Game:
         if  isinstance(genre, Genre) and not hasattr(self,"genre"):
             self._genre = genre
         else:
-            raise Exception("The genre must an instance of a Genre")
+            raise Exception("The genre must be an instance of a Genre")
        
     @property
     def platform(self):
@@ -130,3 +130,41 @@ class Game:
 
         # Set the id to None
         self.id = None
+
+    @classmethod
+    def instance_from_db(cls, row):
+        """Return a Game object having the attribute values from the table row."""
+        from models.Platform import Platform
+        from models.Genre import Genre
+
+        # Check the dictionary for an existing instance using the row's primary key
+        
+        genre = Genre.find_by_id(row[2])
+        platform = Platform.find_by_id(row[3])
+
+        game = cls.all.get(row[0])
+        if game:
+            # ensure attributes match row values in case local instance was modified
+            game.title = row[1]
+            game.genre = row[2]
+            game.platform = row[3]
+        else:
+            # not in dictionary, create new instance and add to dictionary
+
+            game = cls(row[1], genre, platform)
+            game.id = row[0]
+            cls.all[game.id] = game
+        return game
+
+    @classmethod
+    def get_all(cls):
+        """Return a list containing a Game objects per row in the table"""
+        sql = """
+            SELECT *
+            FROM games
+        """
+
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]
+    
