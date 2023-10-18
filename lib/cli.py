@@ -5,7 +5,8 @@ from helpers import (
     exit_program,
     add_game,
     delete_game,
-    display_games
+    display_games,
+    find_by_title
 )
 
 
@@ -30,9 +31,14 @@ def main():
             display_games()
 
 
-        elif choice == '4':
+        elif choice == '5':
             exit_program()
             exit()
+
+        elif choice == "4":
+            title = input("search by title:  ")
+            find_by_title(title)
+
 
 
         # choice = input("Enter your choice: ")
@@ -41,7 +47,8 @@ def menu():
         print("1. Add Game")
         print("2. Delete Game")
         print("3. View All Games")
-        print("4. Exit")
+        print("4. Search Title")
+        print("5. Exit")
      
    
 if __name__ == "__main__":

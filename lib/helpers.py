@@ -42,4 +42,12 @@ def delete_game(title):
     game = Game.find_by_title(title)
     game.delete()
     print(f'{game.title} is fin')
+
+def find_by_title(title):
+    from models.Game import Game
+    uppercase = title.upper()
+    # print(uppercase)
+    game = Game.find_by_title(uppercase)
+    print(f"Title: {game.title},\n Genre: {game.genre.name},\n Platform: {game.platform.name}")
+        
     
