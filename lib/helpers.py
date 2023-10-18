@@ -31,14 +31,15 @@ def add_game(title, genre_name, platform_name):
         
 def display_games():
     games = Game.get_all()
-    import ipdb 
-    ipdb.set_trace()
+    # import ipdb 
+    # ipdb.set_trace()
     
-    
+    print("")
+
     for game in games:
         # if not game.genre.name or not game.platform.name: 
         #     ipdb.set_trace()   
-        print(f"Title: {game.title}, Genre: {game.genre.name}, Platform: {game.platform.name}")
+        print(f"Title: {game.title},\n Genre: {game.genre.name},\n Platform: {game.platform.name} \n\n")
 
 
 genres = []
@@ -47,12 +48,8 @@ games = []
 
 
 def delete_game(title):
-    game = next((g for g in games if g.title == title), None)
-
-
-    if game:
-        game.genre.games.remove(game)
-        game.platform.games.remove(game)
-        games.remove(game)
-    else:
-        print(f"No game found with title '{title}'")
+    from models.Game import Game
+    game = Game.find_by_title(title)
+    game.delete()
+    print(f'{game.title} is fin')
+    
