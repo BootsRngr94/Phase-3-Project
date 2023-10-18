@@ -142,6 +142,9 @@ class Game:
         genre = Genre.find_by_id(row[2])
         platform = Platform.find_by_id(row[3])
 
+        # import ipdb
+        # ipdb.set_trace()
+
         game = cls.all.get(row[0])
         if game:
             # ensure attributes match row values in case local instance was modified

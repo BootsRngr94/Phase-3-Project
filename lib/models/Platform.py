@@ -11,10 +11,10 @@ class Platform:
         return self._name
     @name.setter
     def name(self,name):
-        if type(name) == str and 0 < len(name) and not hasattr( self, "name"):
+        # if type(name) == str and 0 < len(name) and not hasattr( self, "name"):
             self._name = name
-        else:
-            raise Exception("The name must be a string and have more 0 characters")
+        # else:
+        #     raise Exception("The name must be a string and have more 0 characters")
     
     def add_(self):
         return self._genres

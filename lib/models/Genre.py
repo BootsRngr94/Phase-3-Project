@@ -14,11 +14,8 @@ class Genre:
     
     @name.setter
     def name(self, name):
-        print(name)
-        if not hasattr(self,"name"):
-            self._name = name
-        else:
-            raise Exception("The name must be a string and have more than 0 characters")
+        self._name = name
+        
 
         
     def add_game(self):
@@ -107,13 +104,13 @@ class Genre:
 
     @classmethod
     def instance_from_db(cls, row):
-        """Return a Department object having the attribute values from the table row."""
-        # import ipdb 
-        # ipdb.set_trace()
+        """Return a Genre object having the attribute values from the table row."""
         # Check the dictionary for an existing instance using the row's primary key
         genre = cls.all.get(row[0])
         if genre:
             # print(row[1])
+            # import ipdb 
+            # ipdb.set_trace()
             # ensure attributes match row values in case local instance was modified
             genre.name = row[1]
         else:

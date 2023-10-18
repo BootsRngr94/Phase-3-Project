@@ -13,11 +13,7 @@ def main():
     while True:
         menu()
         choice = input("> ")
-        if choice == "0":
-            exit_program()
-            exit()
-        # else:
-            # print("Invalid choice")
+        
         if choice == '1':
             title = input("Enter game title: ")
             genre_name = input("Enter genre name: ")
@@ -35,7 +31,8 @@ def main():
 
 
         elif choice == '4':
-            break
+            exit_program()
+            exit()
 
 
     choice = input("Enter your choice: ")

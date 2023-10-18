@@ -2,7 +2,7 @@
 # lib/debug.py
 
 from models.__init__ import CONN, CURSOR
-import ipdb
+# import ipdb
 from models.Game import Game
 from models.Genre import Genre
 from models.Platform import Platform
@@ -81,4 +81,4 @@ g49 = Game.create("DOOM 64", shooter, nintendo)
 g50 = Game.create("Castlevania symphony of the night", action, nintendo)
 
 
-ipdb.set_trace()
+# ipdb.set_trace()
