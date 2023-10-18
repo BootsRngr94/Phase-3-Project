@@ -1,8 +1,5 @@
 from models.__init__ import CURSOR, CONN
-
-
 class Game:
-
 
     all = {}
     def __init__(self, title, genre, platform):
@@ -10,10 +7,8 @@ class Game:
         self.genre = genre
         self.platform = platform
 
-
         self.genre._games.append(self)
         self.genre._platforms.append(self.platform)
-
 
         self.platform._games.append(self)
         self.platform._genres.append(self.genre)
@@ -24,8 +19,6 @@ class Game:
    
     @title.setter
     def title(self, title):
-        # import ipdb 
-        # ipdb.set_trace()
         if type(title) == str and 0 < len(title):
             self._title = title
         else:
@@ -37,13 +30,7 @@ class Game:
     @genre.setter
     def genre(self, genre):
         from models.Genre import Genre
-        # import ipdb 
-        # ipdb.set_trace()
-        #print(self.genre.name)
-        # if  isinstance(genre, Genre):
         self._genre = genre
-        # else:
-        #     raise Exception("The genre must be an instance of a Genre")
        
     @property
     def platform(self):
@@ -51,11 +38,9 @@ class Game:
     @platform.setter
     def platform(self, platform):
         from models.Platform import Platform
-        # if isinstance(platform, Platform) and not hasattr(self,"platform"):
+
         self._platform = platform
-        # else:
-        #     raise Exception("The platform must be an instance of Platform")
-       
+        
     @classmethod
     def create_table(cls):
             """ Create a new table to persist the attributes of Game instances """
@@ -78,7 +63,6 @@ class Game:
         CURSOR.execute(sql)
         CONN.commit()
 
-
     def save(self):
         """ Insert a new row with the title, genre, and platform of the current Game instance.
         Update object id attribute using the primary key value of new row.
@@ -87,11 +71,9 @@ class Game:
             INSERT INTO games (title, genre, platform)
             VALUES (?, ?, ?)
         """
-        # import ipdb; ipdb.set_trace()
 
         CURSOR.execute(sql, (self.title, self.genre.id, self.platform.id))
         CONN.commit()
-
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
@@ -127,10 +109,8 @@ class Game:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
-        # Delete the dictionary entry using id as the key
         del type(self).all[self.id]
 
-        # Set the id to None
         self.id = None
 
     @classmethod
@@ -143,7 +123,6 @@ class Game:
         
         genre = Genre.find_by_id(row[2])
         platform = Platform.find_by_id(row[3])     
-        # game = Game.find_by_id(row[0])
 
         game = cls.all.get(row[0])
         
@@ -153,9 +132,6 @@ class Game:
             game.genre = genre
             game.platform = platform
         else:
-            # not in dictionary, create new instance and add to dictionary
-            # import ipdb
-            # ipdb.set_trace()
             game = cls(row[1], genre, platform)
             game.id = row[0]
             cls.all[game.id] = game

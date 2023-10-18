@@ -35,7 +35,7 @@ def main():
             exit()
 
 
-    choice = input("Enter your choice: ")
+        # choice = input("Enter your choice: ")
 def menu():
         print("\nMenu:")
         print("1. Add Game")
