@@ -39,7 +39,8 @@ games = []
 
 def delete_game(title):
     from models.Game import Game
-    game = Game.find_by_title(title)
+    uppercase = title.upper()
+    game = Game.find_by_title(uppercase)
     game.delete()
     print(f'{game.title} is fin')
 
