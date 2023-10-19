@@ -15,6 +15,12 @@ The menu will appear prompting you with a Command Line Interface input of your c
     - *make sure to know genre and platform*
     - you can create new instances of either but each game created must have
         -title, genre AND platform
+        -Platfrom input is written as: Xbox, Nintendo, Playstation, PC
+        -Remove what ever platform your game is not available on, 
+        ex: 
+            Halo Infinite
+            Shooter
+            Xbox, Pc
 
 2 - Delete a game 
     -input the title of the game (non case sensitive) you would like to erase from the data base
