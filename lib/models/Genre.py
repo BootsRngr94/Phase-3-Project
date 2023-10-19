@@ -88,9 +88,8 @@ class Genre:
         """
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
-        # Delete the dictionary entry using id as the key
+       
         del type(self).all[self.id]
-        # Set the id to None
         self.id = None
 
 

@@ -7,19 +7,31 @@ def exit_program():
     exit()
 
 
-def add_game(title, genre_name, platform_name):
+def add_game(title, genre_name, platform_names):
     genre = Genre.find_by_name(genre_name)
-    platform = Platform.find_by_name(platform_name)
-
+    
     if not genre:
         genre = Genre.create(genre_name)
         genres.append(genre)
 
+    
+    existing_game = Game.find_by_title(title.upper())
+    
+    if existing_game:
+        print("Game already exists in this list!")
+   
+    platforms = []
+    for platform_name in platform_names:
+        platform = Platform.find_by_name(platform_name)
+        
     if not platform:
         platform = Platform.create(platform_name)
         platforms.append(platform)
 
+    else:
+        platforms.append(platform)
     Game.create(title, genre, platform)
+    return True    
 
 
         
@@ -29,7 +41,7 @@ def display_games():
     print("")
 
     for game in games:  
-        print(f"Title: {game.title},\n Genre: {game.genre.name},\n Platform: {game.platform.name} \n\n")
+        print(f"Title: {game.title}\nGenre: {game.genre.name}\nPlatform: {game.platform.name} \n\n")
 
 
 genres = []
@@ -47,8 +59,13 @@ def delete_game(title):
 def find_by_title(title):
     from models.Game import Game
     uppercase = title.upper()
-    # print(uppercase)
-    game = Game.find_by_title(uppercase)
-    print(f"Title: {game.title},\n Genre: {game.genre.name},\n Platform: {game.platform.name}")
-        
+    try:
+        game = Game.find_by_title(uppercase)
+        if game is not None:
+            print(f"Title: {game.title}\nGenre: {game.genre.name}\nPlatform: {game.platform.name}")
+        else:
+            print(f"No game found with the title: {title}")
+    except Exception as e:
+        raise Exception(f"Error finding game: {e}")  
+    
     
