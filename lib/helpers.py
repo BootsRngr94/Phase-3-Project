@@ -7,31 +7,26 @@ def exit_program():
     exit()
 
 
-def add_game(title, genre_name, platform_names):
+def add_game(title, genre_name, platform_name):
     genre = Genre.find_by_name(genre_name)
-    
+    platform = Platform.find_by_name(platform_name)
+
     if not genre:
         genre = Genre.create(genre_name)
         genres.append(genre)
 
-    
-    existing_game = Game.find_by_title(title.upper())
-    
-    if existing_game:
-        print("Game already exists in this list!")
-   
-    platforms = []
-    for platform_name in platform_names:
-        platform = Platform.find_by_name(platform_name)
-        
     if not platform:
         platform = Platform.create(platform_name)
         platforms.append(platform)
 
+    existing_game = Game.find_by_title(title.upper())
+    
+    if existing_game:
+        print("Game already exists in this list!")
+    
     else:
-        platforms.append(platform)
-    Game.create(title, genre, platform)
-    return True    
+        Game.create(title, genre, platform)
+        return True   
 
 
         
