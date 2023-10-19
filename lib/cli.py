@@ -1,6 +1,4 @@
 # lib/cli.py
-
-
 from helpers import (
     exit_program,
     add_game,
@@ -40,8 +38,6 @@ def main():
             find_by_title(title)
 
 
-
-        # choice = input("Enter your choice: ")
 def menu():
         print("\nMenu:")
         print("1. Add Game")

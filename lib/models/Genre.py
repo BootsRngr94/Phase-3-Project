@@ -53,21 +53,19 @@ class Genre:
             INSERT INTO genres (name)
             VALUES (?)
         """
-
-
         CURSOR.execute(sql, (self.name,))
         CONN.commit()
-
-
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
    
+
     @classmethod
     def create(cls, name):
         """ Initialize a new Genre instance and save the object to the database """
         genre = cls(name)
         genre.save()
         return genre
+   
    
     def update(self):
         """Update the table row corresponding to the current Genre instance."""
@@ -84,23 +82,17 @@ class Genre:
         """Delete the table row corresponding to the current Genre instance,
         delete the dictionary entry, and reassign id attribute"""
 
-
         sql = """
             DELETE FROM genres
             WHERE id = ?
         """
-
-
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
-
-
         # Delete the dictionary entry using id as the key
         del type(self).all[self.id]
-
-
         # Set the id to None
         self.id = None
+
 
     @classmethod
     def instance_from_db(cls, row):
@@ -108,17 +100,13 @@ class Genre:
         # Check the dictionary for an existing instance using the row's primary key
         genre = cls.all.get(row[0])
         if genre:
-            # print(row[1])
-            # import ipdb 
-            # ipdb.set_trace()
-            # ensure attributes match row values in case local instance was modified
             genre.name = row[1]
         else:
-            # not in dictionary, create new instance and add to dictionary
             genre = cls(row[1])
             genre.id = row[0]
             cls.all[genre.id] = genre
         return genre
+
 
     @classmethod
     def find_by_id(cls, id):

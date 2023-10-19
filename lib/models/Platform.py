@@ -11,10 +11,7 @@ class Platform:
         return self._name
     @name.setter
     def name(self,name):
-        # if type(name) == str and 0 < len(name) and not hasattr( self, "name"):
-            self._name = name
-        # else:
-        #     raise Exception("The name must be a string and have more 0 characters")
+        self._name = name
     
     def add_(self):
         return self._genres
@@ -33,6 +30,7 @@ class Platform:
             CURSOR.execute(sql)
             CONN.commit()
    
+
     @classmethod
     def drop_table(cls):
         """ Drop the table that persists Platform instances """
@@ -87,23 +85,17 @@ class Platform:
             DELETE FROM platforms
             WHERE id = ?
         """
-
-
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
-
-
         # Delete the dictionary entry using id as the key
         del type(self).all[self.id]
-
-
         # Set the id to None
         self.id = None
+
 
     @classmethod
     def instance_from_db(cls, row):
         """Return a Department object having the attribute values from the table row."""
-
         # Check the dictionary for an existing instance using the row's primary key
         platform = cls.all.get(row[0])
         if platform:
@@ -116,6 +108,7 @@ class Platform:
             cls.all[platform.id] = platform
         return platform
 
+
     @classmethod
     def find_by_id(cls, id):
         """Return a platform object corresponding to the table row matching the specified primary key"""
@@ -126,6 +119,7 @@ class Platform:
         """
         row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
+    
     
     @classmethod
     def find_by_name(cls, name):
